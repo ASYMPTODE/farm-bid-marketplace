@@ -29,7 +29,7 @@ const cropTypes: CropType[] = [
 const MarketplacePage = () => {
   const { crops } = useData();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedType, setSelectedType] = useState<string>('');
+  const [selectedType, setSelectedType] = useState<string>('all');
   const [showOrganic, setShowOrganic] = useState(false);
   const [sortOption, setSortOption] = useState('newest');
 
@@ -45,7 +45,7 @@ const MarketplacePage = () => {
       crop.location.toLowerCase().includes(searchTerm.toLowerCase());
 
     // Filter by crop type
-    const matchesType = selectedType === '' || crop.type === selectedType;
+    const matchesType = selectedType === 'all' || crop.type === selectedType;
 
     // Filter by organic status
     const matchesOrganic = !showOrganic || crop.organic;
@@ -101,7 +101,7 @@ const MarketplacePage = () => {
                 <SelectValue placeholder="All types" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All types</SelectItem>
+                <SelectItem value="all">All types</SelectItem>
                 {cropTypes.map(type => (
                   <SelectItem key={type} value={type}>{type}</SelectItem>
                 ))}
@@ -147,7 +147,7 @@ const MarketplacePage = () => {
               size="sm"
               onClick={() => {
                 setSearchTerm('');
-                setSelectedType('');
+                setSelectedType('all');
                 setShowOrganic(false);
                 setSortOption('newest');
               }}
